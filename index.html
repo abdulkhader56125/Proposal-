@@ -119,10 +119,15 @@
         <div class="finalWrap fadeIn">
           <div class="videoPlaceholder" id="videoPlaceholder">
             <!-- user will replace this with a video if they want -->
-            <img src="" id="videoPoster" alt="" style="display:none" />
-            <div style="font-size:16px;color:#4a1620;padding:12px">Video placeholder — add your video later</div>
-            <button class="playBtn" id="startMusic" onclick="playMusic()">Play Music ▶</button>
-          </div>
+            <div class="videoPlaceholder" id="videoPlaceholder">
+  <video width="100%" height="100%" controls style="border-radius:10px;">
+    <source src="Friendship.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <button class="playBtn" id="startMusic" onclick="playMusic()" style="bottom:15px; right:15px;">
+    Play Music ▶
+  </button>
+            </div>
 
           <div class="quote" id="finalQuote">"The kind of bond that isn't explained by time or distance — it's felt deeply, quietly, and never breaks."<small>— For the ones who stay, always.</small></div>
         </div>
