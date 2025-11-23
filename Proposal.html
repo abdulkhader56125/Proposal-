@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>The Unbreakable — Bestie Proposal</title>
+<style>
+  :root{
+    --bg1:#ffedf0; --bg2:#ffd6e0; --accent:#ff5e7e; --accent-2:#ff9fb1;
+    --card:#fff; --muted:#6b6b6b; --glass:rgba(255,255,255,0.85);
+  }
+  html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;color:#2b1020}
+  body{
+    background: linear-gradient(180deg,var(--bg1), var(--bg2));
+    display:flex;align-items:flex-start;justify-content:center;padding:22px 12px;
+  }
+  .container{max-width:920px;width:100%;}
+  .top{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+  .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:20px;box-shadow:0 8px 30px rgba(255,94,126,0.18)}
+  h1{margin:0;font-size:22px;line-height:1;color:#2b1020}
+  .subtitle{font-size:13px;color:var(--muted);margin-top:4px}
+
+  /* Card */
+  .card{background:var(--card);border-radius:14px;padding:22px;box-shadow:0 18px 40px rgba(203,43,82,0.12);border:1px solid rgba(0,0,0,0.03)}
+  .question{font-size:20px;margin:0 0 12px 0;color:#271016}
+  .controls{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{padding:12px 18px;border-radius:10px;border:0;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+  .btn-yes{background:linear-gradient(90deg,#ffd59a,#ff9b9b);color:#331414}
+  .btn-no{background:transparent;border:2px solid rgba(255,94,126,0.12);color:#7b1f2f}
+
+  /* message box */
+  .messageBox{margin-top:16px;background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0.95));padding:14px;border-radius:10px;border:1px solid rgba(0,0,0,0.03);min-height:88px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+  .msg{font-size:17px;color:#3b1220;transition:all .28s cubic-bezier(.2,.9,.3,1);opacity:1}
+  .hint{font-size:12px;color:var(--muted);margin-top:8px}
+
+  /* Agreement */
+  .agreement{display:none;margin-top:18px}
+  .agreeCard{background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.98));padding:16px;border-radius:12px;border:1px solid rgba(0,0,0,0.03)}
+  .rules{display:grid;gap:8px;max-height:320px;overflow:auto;padding-right:6px}
+  .rule{padding:10px;border-radius:8px;border-left:4px solid rgba(255,94,126,0.12);background:transparent}
+  .rule label{display:flex;gap:10px;align-items:flex-start}
+  .chk{width:18px;height:18px;border-radius:4px;appearance:none;border:2px solid rgba(0,0,0,0.06);background:white;cursor:pointer}
+  .chk:checked{background:linear-gradient(90deg,#ff9fb1,#ff5e7e);border-color:transparent;box-shadow:0 6px 18px rgba(255,94,126,0.12)}
+  .agreeActions{display:flex;gap:12px;margin-top:12px;align-items:center;flex-wrap:wrap}
+  .btn-agree{background:linear-gradient(90deg,#ff9fb1,#ff5e7e);color:#fff}
+  .btn-disabled{opacity:.5;pointer-events:none}
+
+  /* convince area (for disagree) */
+  .convince{margin-top:12px;background:rgba(255,94,126,0.04);padding:12px;border-radius:10px;border:1px dashed rgba(255,94,126,0.08);min-height:64px}
+  .convMsg{color:#4a101a;font-size:16px}
+
+  /* final page */
+  .final{display:none;margin-top:18px}
+  .finalWrap{background:linear-gradient(180deg,rgba(255,255,255,0.97),rgba(255,255,255,0.97));padding:18px;border-radius:12px;border:1px solid rgba(0,0,0,0.03);text-align:center}
+  .videoPlaceholder{width:100%;height:260px;background:linear-gradient(180deg,#ffeef1,#ffdbe6);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+  .videoPlaceholder img{width:100%;height:100%;object-fit:cover;opacity:.95}
+  .playBtn{position:absolute;background:linear-gradient(90deg,#ff6b88,#ff3f6e);border-radius:999px;padding:12px 16px;color:white;border:0;cursor:pointer;box-shadow:0 10px 30px rgba(255,63,110,0.18)}
+  .quote{margin-top:14px;font-size:18px;color:#3a1220;line-height:1.4}
+  .quote small{display:block;margin-top:8px;color:var(--muted);font-size:13px}
+
+  /* small animations */
+  .pulse{animation:pulse .9s ease-in-out infinite}
+  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+  .fadeIn{animation:fadeIn .48s ease forwards}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* responsive */
+  @media (max-width:560px){
+    .question{font-size:18px}
+    .btn{padding:10px 12px}
+    .videoPlaceholder{height:200px}
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="top">
+      <div class="logo">UB</div>
+      <div>
+        <h1>The Unbreakable — Bestie Proposal</h1>
+        <div class="subtitle">Make it official — cute, funny, and forever.</div>
+      </div>
+    </div>
+
+    <div class="card" id="proposalCard">
+      <p class="question">Hey — I have one important question. Will you be my <strong>bestie</strong> forever?</p>
+
+      <div class="controls">
+        <button class="btn btn-yes pulse" id="yesBtn" onclick="chooseYes()">Yes 💛</button>
+        <button class="btn btn-no" id="noBtn" onclick="chooseNo()">No... 😅</button>
+      </div>
+
+      <div class="messageBox" id="messageBox">
+        <div class="msg" id="messageText">(Waiting for your answer — I have popcorn ready.)</div>
+        <div class="hint">If you press <strong>No</strong>, I will send a funny line. Press <strong>No</strong> again for the next one. Keep going until you give up and choose Yes ❤️</div>
+      </div>
+
+      <!-- AGREEMENT -->
+      <div class="agreement" id="agreementSection">
+        <div class="agreeCard fadeIn">
+          <h3 style="margin:0 0 8px 0">Bestie Agreement — Terms & Conditions</h3>
+          <div class="rules" id="rulesList">
+            <!-- rules populated by script -->
+          </div>
+
+          <div class="agreeActions">
+            <button class="btn btn-agree btn-disabled" id="iAgree" onclick="agreeNow()">I Agree ✅</button>
+            <button class="btn btn-no" id="iDontAgree" onclick="disagreeNow()">I Don't Agree ❌</button>
+          </div>
+
+          <div class="convince" id="convinceBox" style="display:none">
+            <div class="convMsg" id="convMsg">...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FINAL -->
+      <div class="final" id="finalSection">
+        <div class="finalWrap fadeIn">
+          <div class="videoPlaceholder" id="videoPlaceholder">
+            <!-- user will replace this with a video if they want -->
+            <img src="" id="videoPoster" alt="" style="display:none" />
+            <div style="font-size:16px;color:#4a1620;padding:12px">Video placeholder — add your video later</div>
+            <button class="playBtn" id="startMusic" onclick="playMusic()">Play Music ▶</button>
+          </div>
+
+          <div class="quote" id="finalQuote">"The kind of bond that isn't explained by time or distance — it's felt deeply, quietly, and never breaks."<small>— For the ones who stay, always.</small></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="height:14px"></div>
+    <div style="text-align:center;color:rgba(43,16,32,0.6);font-size:13px">Tip: Use this playful page to charm your bestie and make the moment special.</div>
+  </div>
+
+  <!-- audio (user can replace source with their chosen file) -->
+  <audio id="bgAudio" loop preload="auto">
+    <source src="" type="audio/mpeg">
+    <!-- empty — user to add file path or URL later -->
+  </audio>
+
+<script>
+  // ---- configuration lines ----
+  const proposalLines = [
+    "You can reject 100 boys, 200 rishtas, 300 proposals... but BESTIE post is mandatory.",
+    "Listen, being my bestie is not a choice… it's a punishment destiny wrote for you 😅",
+    "Arre please... don't reject me like KEA rejected your PG admission.",
+    "If you say NO, I'll make 47 fake accounts and propose again, one by one.",
+    "If you say NO, I'll do a hunger strike... but after biryani.",
+    "Don't worry, being my bestie is free of cost. No GST, no hidden charges.",
+    "Tum naa bol rahi ho, par mera dil keh raha hai tumhaari 'NO' ke peeche bhi 'YES' chupa hua hai.",
+    "If you reject me, I'll sit outside your house with a placard: 'PLEASE BE MY BESTIE'.",
+    "I'm not asking for relationship, marriage, or 7 promises... Just BESTIE POST.",
+    "If you don't become my bestie... I’ll expose your wrong-answers-only game screenshots.",
+    "Say YES, or else I’ll tell everyone that you forgot my birthday. (Instant guilt-trip)",
+    "You know you’re already my bestie... I’m just trying to make it official for LinkedIn.",
+    "I asked you for friendship, not kidney donation... say YES bro."
+  ];
+
+  const disagreeLines = [
+    "Bro, if you don't agree, I will spam your Insta with old selfies.",
+    "I will tell everyone that you forgot my birthday for the next week.",
+    "I will replace your ringtone with my dramatic begging clip.",
+    "I will start a petition: 'Make her my bestie' and collect signatures.",
+    "If you still say no, I will act like a movie hero outside your house—placard and all."
+  ];
+
+  // Agreement rules (checkboxes)
+  const agreementRules = [
+    "Daily texting is compulsory (minimum 20 nonsense messages).",
+    "We will create memories: reels, trips, museum days and surprise snacks.",
+    "Roast sessions allowed — but apologize if a roast hurts.",
+    "Remind each other to eat, drink water and take medicines when sick.",
+    "Fights shouldn't last more than 48 hours. Silent treatment banned unless a prank.",
+    "Pranks allowed — reveal the truth before anyone cries and ask for forgiveness.",
+    "All secrets stay safe between us. Be a safe space for each other.",
+    "Never forget birthdays. If you do, teasing rights + a gift owed.",
+    "This friendship is permanent — not uninstallable or replaceable."
+  ];
+
+  // ---- state ----
+  let propIndex = 0; // proposal message index (advances only when No clicked)
+  let disIndex = 0;  // disagree message index
+  const messageText = document.getElementById('messageText');
+
+  // populate agreement rules as checkbox list
+  const rulesList = document.getElementById('rulesList');
+  agreementRules.forEach((r,i)=>{
+    const div = document.createElement('div'); div.className='rule';
+    const id = 'rule_'+i;
+    div.innerHTML = `<label><input id="${id}" class="chk" type="checkbox" onchange="onCheckChange()" /> <div style="font-size:15px;color:#3a1220;margin-left:8px">${r}</div></label>`;
+    rulesList.appendChild(div);
+  });
+
+  // DOM elements
+  const agreementSection = document.getElementById('agreementSection');
+  const finalSection = document.getElementById('finalSection');
+  const iAgreeBtn = document.getElementById('iAgree');
+  const iDontAgreeBtn = document.getElementById('iDontAgree');
+  const convinceBox = document.getElementById('convinceBox');
+  const convMsg = document.getElementById('convMsg');
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn = document.getElementById('noBtn');
+
+  // FIRST: proposal handlers
+  function chooseNo(){
+    // show one message each time No is clicked
+    const text = proposalLines[propIndex % proposalLines.length];
+    animateMessage(text);
+    propIndex++;
+  }
+
+  function chooseYes(){
+    // show agreement
+    animateMessage("Yay! Let's make it official — read and tick all the boxes to continue.");
+    setTimeout(()=>{ openAgreement(); },800);
+  }
+
+  function animateMessage(txt){
+    // fade out -> change -> fade in
+    const el = messageText;
+    el.style.opacity = 0;
+    setTimeout(()=>{ el.textContent = txt; el.style.opacity = 1; },260);
+  }
+
+  function openAgreement(){
+    // hide proposal controls visually
+    document.getElementById('proposalCard').scrollIntoView({behavior:'smooth'});
+    agreementSection.style.display = 'block';
+    // hide outer message so attention goes to agreement
+    document.getElementById('messageBox').style.display = 'none';
+    // small entrance effect
+    agreementSection.querySelector('.agreeCard').classList.add('fadeIn');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // CHECK BOX LOGIC
+  function onCheckChange(){
+    // if all checked enable iAgree
+    const checks = Array.from(document.querySelectorAll('.chk'));
+    const all = checks.every(c => c.checked);
+    if(all){
+      iAgreeBtn.classList.remove('btn-disabled');
+      iAgreeBtn.classList.add('btn-agree');
+      iAgreeBtn.disabled = false;
+    }else{
+      iAgreeBtn.classList.add('btn-disabled');
+      iAgreeBtn.disabled = true;
+    }
+  }
+
+  // if she clicks 'I Don't Agree' -> show persuasive lines one by one on each click
+  function disagreeNow(){
+    // reveal convBox and show next message
+    convinceBox.style.display = 'block';
+    const t = disagreeLines[disIndex % disagreeLines.length];
+    convMsg.style.opacity = 0;
+    setTimeout(()=>{ convMsg.textContent = t; convMsg.style.opacity = 1; },200);
+    disIndex++;
+    // small shake animation to the agreement card to be dramatic
+    const card = agreementSection.querySelector('.agreeCard');
+    card.style.transform = 'translateX(-6px)';
+    setTimeout(()=>{ card.style.transform = 'translateX(6px)'; },80);
+    setTimeout(()=>{ card.style.transform = 'translateX(0)'; },160);
+
+    // after a few tries, if she keeps saying no, show a gentle extra line to soften mood
+    if(disIndex > 6){
+      // auto-add little soft line
+      setTimeout(()=>{ convMsg.textContent = "Okay, I miss you when we're not okay — please just trust me." },520);
+    }
+  }
+
+  // when I Agree clicked (only enabled if all checked)
+  function agreeNow(){
+    if(iAgreeBtn.classList.contains('btn-disabled')){
+      // safety: shouldn't happen but nudge
+      disagreeNow();
+      return;
+    }
+    // hide agreement and show final
+    agreementSection.style.display = 'none';
+    finalSection.style.display = 'block';
+    // scroll into final
+    setTimeout(()=>{ document.getElementById('finalSection').scrollIntoView({behavior:'smooth'}); },100);
+  }
+
+  // MUSIC & VIDEO (user will replace audio src and video if needed)
+  const bgAudio = document.getElementById('bgAudio');
+  function playMusic(){
+    // if song src not present, show a gentle fallback melody using WebAudio (simple)
+    const src = bgAudio.querySelector('source').getAttribute('src');
+    if(src && src.trim() !== ""){
+      bgAudio.play().catch(()=>{ alert('Browser blocked auto-play. Tap play on the music control again.')});
+    } else {
+      // create a calm simple oscillator melody (very short pleasant sound loop)
+      try{
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sine'; o.frequency.value = 440; // A4 baseline
+        g.gain.value = 0.0025;
+        o.connect(g); g.connect(ctx.destination);
+        o.start();
+        // smoothly change frequency to create warm effect
+        setInterval(()=>{ o.frequency.value = 330 + Math.random()*220; },500);
+        // stop after 60s for safety
+        setTimeout(()=>{ o.stop(); ctx.close(); },60000);
+      }catch(e){
+        console.warn('Audio fallback failed', e);
+      }
+    }
+    // change play button to 'Playing'
+    const btn = document.getElementById('startMusic'); btn.textContent = 'Music playing 🎵';
+    btn.disabled = true; btn.style.opacity = .8;
+  }
+
+  // safety: ensure yes/no always clickable even if a runtime error occurs
+  window.onerror = function(err){
+    console.error('Runtime error', err);
+    // make sure the UI is not totally blocked
+    document.getElementById('yesBtn').onclick = chooseYes;
+    document.getElementById('noBtn').onclick = chooseNo;
+  };
+
+  // initialize: keep I Agree disabled
+  iAgreeBtn.classList.add('btn-disabled'); iAgreeBtn.disabled = true;
+
+  // small UX: show first friendly message after small pause
+  setTimeout(()=>{ animateMessage("Answer me — I promise it will be fun."); },600);
+</script>
+</body>
+</html>
